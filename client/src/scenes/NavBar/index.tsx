@@ -1,8 +1,11 @@
 import { Box, Button, useMediaQuery, useTheme } from '@mui/material';
+import { SelectedPage } from '../HomePage';
 
-type Props = {};
+type Props = {
+  setPageType: (value: SelectedPage) => void;
+};
 
-const NavBar = (props: Props) => {
+const NavBar = ({ setPageType }: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 
@@ -15,10 +18,16 @@ const NavBar = (props: Props) => {
       flexWrap="wrap"
       bgcolor={palette.background.paper}
     >
-      <Button variant="outlined" onClick={() => {}}>
+      <Button
+        variant="outlined"
+        onClick={() => setPageType(SelectedPage.TTNStatus)}
+      >
         Перевірити ТТН
       </Button>
-      <Button variant="outlined" onClick={() => {}}>
+      <Button
+        variant="outlined"
+        onClick={() => setPageType(SelectedPage.officesSearch)}
+      >
         Список відділень
       </Button>
     </Box>
