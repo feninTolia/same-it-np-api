@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import NavBar from '../../scenes/NavBar';
 import FlexBetween from '../../components/FlexBeetwen';
 import WidgetWrapper from '../../components/WidgetWrapper';
+import StickyHeadTable from './table';
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
@@ -30,7 +31,6 @@ const HomePage = () => {
               label="Номер ТТН"
               sx={{
                 width: isNonMobileScreens ? '62%' : '100%',
-                bgcolor: palette.background.paper,
               }}
               // onChange={(e) => setTTNValue(e.target.value)}
             />
@@ -44,7 +44,7 @@ const HomePage = () => {
               }}
               // onClick={getTTNInfo}
             >
-              Get status TTN
+              Отримати статус ТТН
             </Button>
           </FlexBetween>
         </WidgetWrapper>
@@ -114,6 +114,50 @@ const HomePage = () => {
             </Typography>
           </WidgetWrapper>
         </Box>
+      </Box>
+
+      <Box width={'80%'} margin="auto">
+        <WidgetWrapper
+          display={'flex'}
+          flexWrap="wrap"
+          gap={'1rem'}
+          justifyContent="space-between"
+        >
+          <Typography width={'100%'} variant="h3">
+            Пошук відділення за номером або за населеним пунктом
+          </Typography>
+          <TextField
+            variant="outlined"
+            // value={TTNValue}
+            label="Місто"
+            sx={{
+              width: isNonMobileScreens ? '35%' : '100%',
+            }}
+          />
+          <TextField
+            variant="outlined"
+            // value={TTNValue}
+            disabled
+            label="№ відділення"
+            sx={{
+              width: isNonMobileScreens ? '35%' : '100%',
+            }}
+          />
+          <Button
+            variant="contained"
+            sx={{
+              height: 53,
+              transition: '250ms',
+              width: isNonMobileScreens ? '20%' : '100%',
+              '&:hover': { color: palette.background.paper },
+            }}
+            // onClick={getTTNInfo}
+          >
+            Шукати
+          </Button>
+
+          <StickyHeadTable />
+        </WidgetWrapper>
       </Box>
     </Box>
   );
