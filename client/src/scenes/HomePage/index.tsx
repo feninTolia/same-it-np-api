@@ -12,9 +12,54 @@ import FlexBetween from '../../components/FlexBeetwen';
 import WidgetWrapper from '../../components/WidgetWrapper';
 import StickyHeadTable from './table';
 
+const API_KEY = '47bebc438b872c9c970902470e6eaba0';
+
+const TTNInfoInitialValues = {
+  status: '',
+  dateCreated: '',
+  recipientDateTime: '',
+};
+
 const HomePage = () => {
+  const [TTNValue, setTTNValue] = useState<string>('');
+  const [TTNInfo, setTTNInfo] = useState(TTNInfoInitialValues);
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
+
+  const requestBody = {
+    apiKey: API_KEY,
+    modelName: 'TrackingDocument',
+    calledMethod: 'getStatusDocuments',
+    methodProperties: {
+      Documents: [
+        {
+          DocumentNumber: TTNValue,
+        },
+      ],
+    },
+  };
+
+  const getTTNInfo = async () => {
+    setTTNInfo(TTNInfoInitialValues);
+
+    const response = await fetch('https://api.novaposhta.ua/v2.0/json/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody),
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      const { Status, DateCreated, RecipientDateTime } = result.data.at(0);
+
+      setTTNInfo({
+        status: Status,
+        dateCreated: DateCreated,
+        recipientDateTime: RecipientDateTime,
+      });
+    }
+    console.log(result);
+  };
 
   return (
     <Box>
@@ -27,12 +72,12 @@ const HomePage = () => {
           >
             <TextField
               variant="outlined"
-              // value={TTNValue}
+              value={TTNValue}
               label="Номер ТТН"
               sx={{
                 width: isNonMobileScreens ? '62%' : '100%',
               }}
-              // onChange={(e) => setTTNValue(e.target.value)}
+              onChange={(e) => setTTNValue(e.target.value)}
             />
             <Button
               variant="contained"
@@ -42,7 +87,7 @@ const HomePage = () => {
                 width: isNonMobileScreens ? '28%' : '100%',
                 '&:hover': { color: palette.background.paper },
               }}
-              // onClick={getTTNInfo}
+              onClick={getTTNInfo}
             >
               Отримати статус ТТН
             </Button>
@@ -59,15 +104,15 @@ const HomePage = () => {
           >
             <Typography variant="h4">
               <span style={{ fontWeight: 'bold' }}>Статус доставки: </span>
-              {/* {TTNInfo.status} */}
+              {TTNInfo.status}
             </Typography>
             <Typography>
               <span style={{ fontWeight: 'bold' }}>Відправлено: </span>
-              {/* {TTNInfo.dateCreated} */}
+              {TTNInfo.dateCreated}
             </Typography>
             <Typography>
               <span style={{ fontWeight: 'bold' }}>Отримано: </span>
-              {/* {TTNInfo.recipientDateTime} */}
+              {TTNInfo.recipientDateTime}
             </Typography>
           </WidgetWrapper>
 
@@ -128,7 +173,7 @@ const HomePage = () => {
           </Typography>
           <TextField
             variant="outlined"
-            // value={TTNValue}
+            // value={}
             label="Місто"
             sx={{
               width: isNonMobileScreens ? '35%' : '100%',
@@ -136,7 +181,7 @@ const HomePage = () => {
           />
           <TextField
             variant="outlined"
-            // value={TTNValue}
+            // value={}
             disabled
             label="№ відділення"
             sx={{
@@ -151,7 +196,7 @@ const HomePage = () => {
               width: isNonMobileScreens ? '20%' : '100%',
               '&:hover': { color: palette.background.paper },
             }}
-            // onClick={getTTNInfo}
+            onClick={getTTNInfo}
           >
             Шукати
           </Button>
