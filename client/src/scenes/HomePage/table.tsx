@@ -9,7 +9,11 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 interface Column {
-  id: 'type' | 'address' | 'schedule' | 'maxWeight';
+  id:
+    | 'Number'
+    | 'ShortAddress'
+    // 'Schedule' |
+    | 'TotalMaxWeightAllowed';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -17,140 +21,37 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'type', label: 'Відділення / Поштомат', minWidth: 170 },
-  { id: 'address', label: 'Адреса', minWidth: 100 },
+  { id: 'Number', label: 'Відділення / Поштомат', minWidth: 170 },
+  { id: 'ShortAddress', label: 'Адреса', minWidth: 100 },
+  // {
+  //   id: 'Schedule',
+  //   label: 'Графік роботи',
+  //   minWidth: 170,
+  //   align: 'right',
+  //   format: (value: number) => value.toLocaleString('en-US'),
+  // },
   {
-    id: 'schedule',
-    label: 'Графік роботи',
-    minWidth: 170,
-    align: 'right',
-    // format: (value: number) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'maxWeight',
+    id: 'TotalMaxWeightAllowed',
     label: 'Вага до',
     minWidth: 170,
     align: 'right',
-    // format: (value: number) => value.toLocaleString('en-US'),
+    format: (value: number) => value.toLocaleString('en-US'),
   },
 ];
 
-interface Data {
-  type: string;
-  address: string;
-  schedule: string;
-  maxWeight: string;
+interface office {
+  Number: string;
+  ShortAddress: string;
+  TotalMaxWeightAllowed: string;
+  Schedule: object;
+  Ref: string;
 }
 
-function createData(
-  type: string,
-  address: string,
-  schedule: string,
-  maxWeight: string
-): Data {
-  return { type, address, schedule, maxWeight };
+interface props {
+  officesList: office[];
 }
 
-const rows = [
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-  createData(
-    'Відд 1',
-    'Київ, вул. Пирогівський шлях, 135',
-    'Сьогодні:: 08:00-21:00',
-    '1100 кг'
-  ),
-];
-
-export default function StickyHeadTable() {
+export default function StickyHeadTable({ officesList }: props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -183,18 +84,19 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {officesList
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((office) => {
                 return (
                   <TableRow
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.address}
+                    key={office.Ref}
                   >
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      const value = office[column.id];
+
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === 'number'
@@ -212,7 +114,7 @@ export default function StickyHeadTable() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={officesList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

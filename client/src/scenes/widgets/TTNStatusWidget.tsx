@@ -30,7 +30,6 @@ const TTNStatusWidget = (props: Props) => {
     const searchQueriesLS = localStorage.getItem('searchQueries');
     if (searchQueriesLS) {
       const parsedSearchQueriesLS = JSON.parse(searchQueriesLS);
-      console.log(parsedSearchQueriesLS);
       setSearchQueries(parsedSearchQueriesLS);
     }
   }, []);
@@ -45,7 +44,6 @@ const TTNStatusWidget = (props: Props) => {
     setTTNInfo(initialValuesTTNInfo);
 
     const result = await getTTNInfo(TTNValue);
-    console.log(result);
 
     if (result) {
       const { Status, DateCreated, RecipientDateTime, Number } =

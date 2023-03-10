@@ -6,14 +6,24 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useState } from 'react';
+import { getOfficesListFetch } from '../../API/getOfficesListFetch';
 import WidgetWrapper from '../../components/WidgetWrapper';
 import StickyHeadTable from '../HomePage/table';
 
 type Props = {};
 
 const SearchOfficesWidget = (props: Props) => {
+  const [officesList, setOfficesList] = useState<object[]>([]);
+  const [cityName, setCityName] = useState<string>('Херсон');
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
+
+  const getOfficesList = async () => {
+    const result = await getOfficesListFetch(cityName);
+
+    setOfficesList(result);
+  };
 
   return (
     <Box width={'80%'} margin="auto">
@@ -28,7 +38,8 @@ const SearchOfficesWidget = (props: Props) => {
         </Typography>
         <TextField
           variant="outlined"
-          // value={}
+          value={cityName}
+          onChange={(e) => setCityName(e.target.value)}
           label="Місто"
           sx={{
             width: isNonMobileScreens ? '35%' : '100%',
@@ -51,11 +62,12 @@ const SearchOfficesWidget = (props: Props) => {
             width: isNonMobileScreens ? '20%' : '100%',
             '&:hover': { color: palette.background.paper },
           }}
+          onClick={getOfficesList}
         >
           Шукати
         </Button>
 
-        <StickyHeadTable />
+        <StickyHeadTable officesList={officesList} />
       </WidgetWrapper>
     </Box>
   );
