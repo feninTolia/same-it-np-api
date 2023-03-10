@@ -27,10 +27,12 @@ const TTNStatusWidget = (props: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 
-  const getTTNInfo = async (updateHistory: boolean = true) => {
+  const getTTNInfo = async (historySearchValue: string = '') => {
     setTTNInfo(initialValuesTTNInfo);
 
-    const result = await TTNInfoFetch(TTNValue);
+    const result = await TTNInfoFetch(
+      historySearchValue !== '' ? historySearchValue : TTNValue
+    );
 
     if (result) {
       const { Status, DateCreated, RecipientDateTime, Number } =
@@ -42,7 +44,8 @@ const TTNStatusWidget = (props: Props) => {
         recipientDateTime: RecipientDateTime,
       });
 
-      updateHistory && setSearchQueries((prev) => [...prev, Number]);
+      historySearchValue === '' &&
+        setSearchQueries((prev) => [...prev, Number]);
     }
   };
 
