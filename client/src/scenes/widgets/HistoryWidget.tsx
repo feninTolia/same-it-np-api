@@ -86,7 +86,7 @@ const HistoryWidget = ({
         ))}
       </Box>
     </WidgetWrapper>
-  ) : undefined;
+  ) : null;
 };
 
 export default HistoryWidget;

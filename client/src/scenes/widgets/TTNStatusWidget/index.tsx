@@ -7,10 +7,11 @@ import {
   useTheme,
 } from '@mui/material';
 import { useState } from 'react';
-import { TTNInfoFetch } from '../../API/TTNInfoFetch';
-import FlexBetween from '../../components/FlexBeetwen';
-import WidgetWrapper from '../../components/WidgetWrapper';
-import HistoryWidget from './HistoryWidget';
+import { TTNInfoFetch } from '../../../API/TTNInfoFetch';
+import FlexBetween from '../../../components/FlexBeetwen';
+import WidgetWrapper from '../../../components/WidgetWrapper';
+import HistoryWidget from '../HistoryWidget';
+import Form from './Form';
 
 type Props = {};
 
@@ -51,36 +52,21 @@ const TTNStatusWidget = (props: Props) => {
 
   return (
     <Box width={'80%'} margin="auto">
+      {/* TTN Search */}
       <WidgetWrapper marginBottom={'2rem'}>
-        <FlexBetween
-          flexDirection={isNonMobileScreens ? 'row' : 'column'}
-          gap="1rem"
-        >
-          <TextField
-            variant="outlined"
-            value={TTNValue}
-            label="Номер ТТН"
-            sx={{
-              width: isNonMobileScreens ? '62%' : '100%',
-            }}
-            onChange={(e) => setTTNValue(e.target.value)}
-          />
-          <Button
-            variant="contained"
-            sx={{
-              height: 53,
-              transition: '250ms',
-              width: isNonMobileScreens ? '28%' : '100%',
-              '&:hover': { color: palette.background.paper },
-            }}
-            onClick={() => getTTNInfo()}
-          >
-            Отримати статус ТТН
-          </Button>
-        </FlexBetween>
+        <Form
+          TTNValue={TTNValue}
+          setTTNValue={setTTNValue}
+          getTTNInfo={getTTNInfo}
+        />
       </WidgetWrapper>
 
-      <Box display={isNonMobileScreens ? 'flex' : undefined} gap="6%">
+      {/* info widget */}
+      <Box
+        display={isNonMobileScreens ? 'flex' : undefined}
+        gap="6%"
+        alignItems={'flex-start'}
+      >
         <WidgetWrapper
           marginBottom={'2rem'}
           width={isNonMobileScreens ? '64%' : '100%'}
@@ -88,20 +74,21 @@ const TTNStatusWidget = (props: Props) => {
           flexDirection={'column'}
           gap="0.5rem"
         >
-          <Typography variant="h4">
+          <Typography variant="h4" mb={'1rem'}>
             <span style={{ fontWeight: 'bold' }}>Статус доставки: </span>
             {TTNInfo.status}
           </Typography>
-          <Typography>
+          <Typography variant="h5" mb={'0.5rem'}>
             <span style={{ fontWeight: 'bold' }}>Відправлено: </span>
             {TTNInfo.dateCreated}
           </Typography>
-          <Typography>
+          <Typography variant="h5" mb={'1rem'}>
             <span style={{ fontWeight: 'bold' }}>Отримано: </span>
             {TTNInfo.recipientDateTime}
           </Typography>
         </WidgetWrapper>
 
+        {/* History Widget */}
         <HistoryWidget
           setTTNValue={setTTNValue}
           getTTNInfo={getTTNInfo}
