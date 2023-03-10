@@ -18,7 +18,7 @@ const initialValuesTTNInfo = {
   dateCreated: '',
   recipientDateTime: '',
 };
-//  20450664824930
+
 const TTNStatusWidget = (props: Props) => {
   const [TTNValue, setTTNValue] = useState<string>('');
   const [TTNInfo, setTTNInfo] = useState(initialValuesTTNInfo);
@@ -30,7 +30,6 @@ const TTNStatusWidget = (props: Props) => {
     const searchQueriesLS = localStorage.getItem('searchQueries');
     if (searchQueriesLS) {
       const parsedSearchQueriesLS = JSON.parse(searchQueriesLS);
-      console.log(parsedSearchQueriesLS);
       setSearchQueries(parsedSearchQueriesLS);
     }
   }, []);
@@ -45,7 +44,6 @@ const TTNStatusWidget = (props: Props) => {
     setTTNInfo(initialValuesTTNInfo);
 
     const result = await getTTNInfo(TTNValue);
-    console.log(result);
 
     if (result) {
       const { Status, DateCreated, RecipientDateTime, Number } =
@@ -127,13 +125,13 @@ const TTNStatusWidget = (props: Props) => {
           <Box sx={{ overflowY: 'scroll', maxHeight: 200 }}>
             {searchQueries.map((searchQuery, idx) => (
               <Button
+                key={`${idx}-${searchQuery}`}
                 onClick={() => {
                   setTTNValue(searchQuery);
                   getTTNInfoHandler(false);
                 }}
               >
                 <Typography
-                  key={`${idx}-${searchQuery}`}
                   sx={{
                     transition: '200ms',
                     '&:hover': {

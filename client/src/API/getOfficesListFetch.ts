@@ -1,16 +1,13 @@
 const API_KEY = '47bebc438b872c9c970902470e6eaba0';
 
-export const getTTNInfo = async (TTNValue: string) => {
+export const getOfficesListFetch = async (CityName: string) => {
   const requestBody = {
     apiKey: API_KEY,
-    modelName: 'TrackingDocument',
-    calledMethod: 'getStatusDocuments',
+    modelName: 'Address',
+    calledMethod: 'getWarehouses',
     methodProperties: {
-      Documents: [
-        {
-          DocumentNumber: TTNValue,
-        },
-      ],
+      CityName,
+      Language: 'UA',
     },
   };
 
@@ -22,6 +19,6 @@ export const getTTNInfo = async (TTNValue: string) => {
   const result = await response.json();
 
   if (result.success) {
-    return result;
+    return result.data;
   }
 };
