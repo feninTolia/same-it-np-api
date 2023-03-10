@@ -10,7 +10,7 @@ import WidgetWrapper from '../../components/WidgetWrapper';
 
 interface Props {
   setTTNValue: (value: string) => void;
-  getTTNInfo: (value: boolean) => void;
+  getTTNInfo: (value: string) => void;
   searchQueries: string[];
   setSearchQueries: (value: SetStateAction<string[]>) => void;
 }
@@ -55,7 +55,7 @@ const HistoryWidget = ({
             key={`${idx}-${searchQuery}`}
             onClick={() => {
               setTTNValue(searchQuery);
-              getTTNInfo(false);
+              getTTNInfo(searchQuery);
             }}
           >
             <Typography
