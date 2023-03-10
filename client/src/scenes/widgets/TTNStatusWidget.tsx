@@ -26,6 +26,21 @@ const TTNStatusWidget = (props: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 
+  useEffect(() => {
+    const searchQueriesLS = localStorage.getItem('searchQueries');
+    if (searchQueriesLS) {
+      const parsedSearchQueriesLS = JSON.parse(searchQueriesLS);
+      console.log(parsedSearchQueriesLS);
+      setSearchQueries(parsedSearchQueriesLS);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchQueries.length !== 0) {
+      localStorage.setItem('searchQueries', JSON.stringify(searchQueries));
+    }
+  }, [searchQueries]);
+
   const getTTNInfoHandler = async (updateHistory: boolean = true) => {
     setTTNInfo(initialValuesTTNInfo);
 
@@ -41,6 +56,8 @@ const TTNStatusWidget = (props: Props) => {
         dateCreated: DateCreated,
         recipientDateTime: RecipientDateTime,
       });
+
+      updateHistory && setSearchQueries((prev) => [...prev, Number]);
     }
   };
 
