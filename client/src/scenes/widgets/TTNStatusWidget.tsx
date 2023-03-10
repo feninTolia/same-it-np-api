@@ -18,7 +18,7 @@ const initialValuesTTNInfo = {
   dateCreated: '',
   recipientDateTime: '',
 };
-//  20450664824930
+
 const TTNStatusWidget = (props: Props) => {
   const [TTNValue, setTTNValue] = useState<string>('');
   const [TTNInfo, setTTNInfo] = useState(initialValuesTTNInfo);
@@ -125,13 +125,13 @@ const TTNStatusWidget = (props: Props) => {
           <Box sx={{ overflowY: 'scroll', maxHeight: 200 }}>
             {searchQueries.map((searchQuery, idx) => (
               <Button
+                key={`${idx}-${searchQuery}`}
                 onClick={() => {
                   setTTNValue(searchQuery);
                   getTTNInfoHandler(false);
                 }}
               >
                 <Typography
-                  key={`${idx}-${searchQuery}`}
                   sx={{
                     transition: '200ms',
                     '&:hover': {
