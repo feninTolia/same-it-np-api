@@ -1,6 +1,6 @@
 const API_KEY = '47bebc438b872c9c970902470e6eaba0';
 
-export const getTTNInfo = async (TTNValue: string) => {
+export const TTNInfoFetch = async (TTNValue: string) => {
   const requestBody = {
     apiKey: API_KEY,
     modelName: 'TrackingDocument',
