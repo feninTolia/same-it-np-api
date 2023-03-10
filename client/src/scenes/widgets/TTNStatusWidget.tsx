@@ -6,10 +6,11 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { getTTNInfo } from '../../API/getTTNInfo';
+import { useState } from 'react';
+import { TTNInfoFetch } from '../../API/TTNInfoFetch';
 import FlexBetween from '../../components/FlexBeetwen';
 import WidgetWrapper from '../../components/WidgetWrapper';
+import HistoryWidget from './HistoryWidget';
 
 type Props = {};
 
@@ -26,24 +27,10 @@ const TTNStatusWidget = (props: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 
-  useEffect(() => {
-    const searchQueriesLS = localStorage.getItem('searchQueries');
-    if (searchQueriesLS) {
-      const parsedSearchQueriesLS = JSON.parse(searchQueriesLS);
-      setSearchQueries(parsedSearchQueriesLS);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (searchQueries.length !== 0) {
-      localStorage.setItem('searchQueries', JSON.stringify(searchQueries));
-    }
-  }, [searchQueries]);
-
-  const getTTNInfoHandler = async (updateHistory: boolean = true) => {
+  const getTTNInfo = async (updateHistory: boolean = true) => {
     setTTNInfo(initialValuesTTNInfo);
 
-    const result = await getTTNInfo(TTNValue);
+    const result = await TTNInfoFetch(TTNValue);
 
     if (result) {
       const { Status, DateCreated, RecipientDateTime, Number } =
@@ -83,7 +70,7 @@ const TTNStatusWidget = (props: Props) => {
               width: isNonMobileScreens ? '28%' : '100%',
               '&:hover': { color: palette.background.paper },
             }}
-            onClick={() => getTTNInfoHandler()}
+            onClick={() => getTTNInfo()}
           >
             Отримати статус ТТН
           </Button>
@@ -112,40 +99,12 @@ const TTNStatusWidget = (props: Props) => {
           </Typography>
         </WidgetWrapper>
 
-        <WidgetWrapper
-          width={isNonMobileScreens ? '30%' : '100%'}
-          display="flex"
-          flexDirection={'column'}
-          gap="0.5rem"
-        >
-          <Typography variant="h4" fontWeight={'bold'}>
-            Історія
-          </Typography>
-
-          <Box sx={{ overflowY: 'scroll', maxHeight: 200 }}>
-            {searchQueries.map((searchQuery, idx) => (
-              <Button
-                key={`${idx}-${searchQuery}`}
-                onClick={() => {
-                  setTTNValue(searchQuery);
-                  getTTNInfoHandler(false);
-                }}
-              >
-                <Typography
-                  sx={{
-                    transition: '200ms',
-                    '&:hover': {
-                      color: palette.primary.main,
-                      cursor: 'pointer',
-                    },
-                  }}
-                >
-                  {searchQuery}
-                </Typography>
-              </Button>
-            ))}
-          </Box>
-        </WidgetWrapper>
+        <HistoryWidget
+          setTTNValue={setTTNValue}
+          getTTNInfo={getTTNInfo}
+          searchQueries={searchQueries}
+          setSearchQueries={setSearchQueries}
+        />
       </Box>
     </Box>
   );

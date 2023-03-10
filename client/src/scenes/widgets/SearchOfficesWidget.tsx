@@ -7,7 +7,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useState } from 'react';
-import { getOfficesListFetch } from '../../API/getOfficesListFetch';
+import { officesListFetch } from '../../API/officesListFetch';
 import WidgetWrapper from '../../components/WidgetWrapper';
 import { office } from '../../shared/types';
 import StickyHeadTable from '../HomePage/table';
@@ -21,7 +21,7 @@ const SearchOfficesWidget = (props: Props) => {
   const { palette } = useTheme();
 
   const getOfficesList = async () => {
-    const result = await getOfficesListFetch(cityName);
+    const result = await officesListFetch(cityName);
 
     setOfficesList(result);
   };

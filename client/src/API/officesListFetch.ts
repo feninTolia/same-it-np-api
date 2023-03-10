@@ -1,6 +1,6 @@
 const API_KEY = '47bebc438b872c9c970902470e6eaba0';
 
-export const getOfficesListFetch = async (CityName: string) => {
+export const officesListFetch = async (CityName: string) => {
   const requestBody = {
     apiKey: API_KEY,
     modelName: 'Address',
