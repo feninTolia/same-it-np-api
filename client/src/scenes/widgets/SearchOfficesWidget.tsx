@@ -9,12 +9,13 @@ import {
 import { useState } from 'react';
 import { getOfficesListFetch } from '../../API/getOfficesListFetch';
 import WidgetWrapper from '../../components/WidgetWrapper';
+import { office } from '../../shared/types';
 import StickyHeadTable from '../HomePage/table';
 
 type Props = {};
 
 const SearchOfficesWidget = (props: Props) => {
-  const [officesList, setOfficesList] = useState<object[]>([]);
+  const [officesList, setOfficesList] = useState<office[]>([]);
   const [cityName, setCityName] = useState<string>('Херсон');
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();

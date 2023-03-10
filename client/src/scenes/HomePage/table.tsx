@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { office } from '../../shared/types';
 
 interface Column {
   id:
@@ -38,14 +39,6 @@ const columns: readonly Column[] = [
     format: (value: number) => value.toLocaleString('en-US'),
   },
 ];
-
-interface office {
-  Number: string;
-  ShortAddress: string;
-  TotalMaxWeightAllowed: string;
-  Schedule: object;
-  Ref: string;
-}
 
 interface props {
   officesList: office[];
