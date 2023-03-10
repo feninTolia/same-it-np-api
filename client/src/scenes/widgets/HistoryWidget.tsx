@@ -6,7 +6,9 @@ import {
   useTheme,
 } from '@mui/material';
 import { SetStateAction, useEffect } from 'react';
+import FlexBetween from '../../components/FlexBeetwen';
 import WidgetWrapper from '../../components/WidgetWrapper';
+import { CloseOutlined } from '@mui/icons-material';
 
 interface Props {
   setTTNValue: (value: string) => void;
@@ -38,16 +40,27 @@ const HistoryWidget = ({
     }
   }, [searchQueries]);
 
-  return (
+  return searchQueries.length !== 0 ? (
     <WidgetWrapper
       width={isNonMobileScreens ? '30%' : '100%'}
       display="flex"
       flexDirection={'column'}
       gap="0.5rem"
     >
-      <Typography variant="h4" fontWeight={'bold'}>
-        Історія
-      </Typography>
+      <FlexBetween>
+        <Typography variant="h4" fontWeight={'bold'}>
+          Історія
+        </Typography>
+        <Button
+          color="error"
+          onClick={() => {
+            localStorage.clear();
+            setSearchQueries([]);
+          }}
+        >
+          <CloseOutlined />
+        </Button>
+      </FlexBetween>
 
       <Box sx={{ overflowY: 'scroll', maxHeight: 200 }}>
         {searchQueries.map((searchQuery, idx) => (
@@ -73,7 +86,7 @@ const HistoryWidget = ({
         ))}
       </Box>
     </WidgetWrapper>
-  );
+  ) : undefined;
 };
 
 export default HistoryWidget;
