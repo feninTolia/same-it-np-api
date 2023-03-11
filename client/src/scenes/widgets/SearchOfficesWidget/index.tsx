@@ -1,39 +1,32 @@
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import { useState } from 'react';
-import { officesListFetch } from '../../../API/officesListFetch';
+import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { getWarehousesFetch } from '../../../API/getWarehousesFetch';
 import WidgetWrapper from '../../../components/WidgetWrapper';
 import { office } from '../../../shared/types';
 import Form from './Form';
 import PostOfficesList from './PostOfficesList';
+import { useAppSelector } from '../../../hook';
 
-type Props = {};
-
-const SearchOfficesWidget = (props: Props) => {
+const SearchOfficesWidget: React.FC = () => {
   const [officesList, setOfficesList] = useState<office[]>([]);
-  const [cityName, setCityName] = useState<string>('');
-  const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
-  const { palette } = useTheme();
+  const { wareHousesSelect } = useAppSelector((state) => state.getWarehouses);
 
-  const getOfficesList = async (CityRef: string = '') => {
-    const result = await officesListFetch({
-      CityRef: CityRef,
-      CityName: cityName,
+  const getOfficesList = async () => {
+    console.log('wareHousesSelect.CityName', wareHousesSelect.CityName);
+
+    const result = await getWarehousesFetch({
+      CityRef: wareHousesSelect.CityRef,
+      CityName: wareHousesSelect.CityName,
     });
-    console.log('getOfficesList result', result);
-
-    if (result.length === 0) {
-      console.log('Відділень не знайдено');
-    }
+    if (!result) return;
 
     setOfficesList(result);
   };
+
+  useEffect(() => {
+    if (wareHousesSelect.CityRef === '') return;
+    getOfficesList();
+  }, [wareHousesSelect]);
 
   return (
     <Box width={'80%'} margin="auto">
@@ -47,11 +40,7 @@ const SearchOfficesWidget = (props: Props) => {
           Пошук відділення за номером або за населеним пунктом
         </Typography>
 
-        <Form
-          cityName={cityName}
-          setCityName={setCityName}
-          getOfficesList={getOfficesList}
-        />
+        <Form getOfficesList={getOfficesList} />
 
         {officesList.length !== 0 ? (
           <PostOfficesList officesList={officesList} />
