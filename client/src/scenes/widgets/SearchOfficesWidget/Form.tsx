@@ -6,8 +6,9 @@ import {
   Box,
   MenuItem,
 } from '@mui/material';
+import debounce from 'lodash.debounce';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { searchSettlementsFetch } from '../../../API/searchSettlementsFetch';
 import { formValidation } from './formValidation';
@@ -42,10 +43,11 @@ const Form = ({ cityName, setCityName, getOfficesList }: Props) => {
 
   const onSubmit: SubmitHandler<IFormValue> = (data) => {
     getOfficesList();
+    setSettlementsDropdownIsShown(false);
   };
 
   const searchSettlements = async (input: string) => {
-    if (input.length < 4) return;
+    if (input.length < 2) return;
 
     const res = await searchSettlementsFetch(input);
     console.log(res);
@@ -54,6 +56,11 @@ const Form = ({ cityName, setCityName, getOfficesList }: Props) => {
       setSettlements(res.at(0).Addresses);
     } else console.log('wrong request');
   };
+
+  const debouncedSearchSettlements = useMemo(
+    () => debounce(searchSettlements, 500),
+    []
+  );
 
   return (
     <form
@@ -70,7 +77,7 @@ const Form = ({ cityName, setCityName, getOfficesList }: Props) => {
       <Controller
         control={control}
         name="cityName"
-        rules={formValidation.cityName}
+        // rules={formValidation.cityName}
         render={({ field }) => (
           <TextField
             autoComplete="false"
@@ -82,7 +89,8 @@ const Form = ({ cityName, setCityName, getOfficesList }: Props) => {
             onChange={(e) => {
               field.onChange(e);
 
-              searchSettlements(e.target.value);
+              debouncedSearchSettlements(e.target.value);
+              // searchSettlements(e.target.value);
               setCityName(e.target.value);
               setSettlementsDropdownIsShown(true);
             }}
@@ -126,6 +134,7 @@ const Form = ({ cityName, setCityName, getOfficesList }: Props) => {
           </MenuItem>
         ))}
       </Box>
+
       <Controller
         control={control}
         name="cityName"

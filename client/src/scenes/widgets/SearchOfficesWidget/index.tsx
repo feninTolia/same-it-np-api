@@ -22,12 +22,15 @@ const SearchOfficesWidget = (props: Props) => {
   const { palette } = useTheme();
 
   const getOfficesList = async (CityRef: string = '') => {
-    console.log(' in getOfficesList');
-
     const result = await officesListFetch({
       CityRef: CityRef,
       CityName: cityName,
     });
+    console.log('getOfficesList result', result);
+
+    if (result.length === 0) {
+      console.log('Відділень не знайдено');
+    }
 
     setOfficesList(result);
   };
