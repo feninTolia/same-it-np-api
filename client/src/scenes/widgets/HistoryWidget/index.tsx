@@ -6,8 +6,8 @@ import {
   useTheme,
 } from '@mui/material';
 import { SetStateAction, useEffect } from 'react';
-import FlexBetween from '../../components/FlexBeetwen';
-import WidgetWrapper from '../../components/WidgetWrapper';
+import FlexBetween from '../../../components/FlexBeetwen';
+import WidgetWrapper from '../../../components/WidgetWrapper';
 import { CloseOutlined } from '@mui/icons-material';
 
 interface Props {

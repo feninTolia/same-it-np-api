@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { office } from '../../shared/types';
+import { office } from '../../../shared/types';
 
 interface Column {
   id:
@@ -44,7 +44,7 @@ interface props {
   officesList: office[];
 }
 
-export default function StickyHeadTable({ officesList }: props) {
+export default function PostOfficesList({ officesList }: props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

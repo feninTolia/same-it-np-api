@@ -25,7 +25,6 @@ const Form = ({ TTNValue, setTTNValue, getTTNInfo }: Props) => {
     control,
     formState: { errors },
   } = useForm<IFormValue>({ values: { inputValue: TTNValue } });
-
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 

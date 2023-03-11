@@ -1,21 +1,14 @@
 const API_KEY = '47bebc438b872c9c970902470e6eaba0';
 
-interface searchValues {
-  CityName?: string;
-  CityRef?: string;
-}
-
-export const officesListFetch = async ({ CityName, CityRef }: searchValues) => {
-  console.log('in officesListFetch');
-
+export const searchSettlementsFetch = async (CityName: string) => {
   const requestBody = {
     apiKey: API_KEY,
     modelName: 'Address',
-    calledMethod: 'getWarehouses',
+    calledMethod: 'searchSettlements',
     methodProperties: {
-      CityName: CityRef ? '' : CityName,
-      CityRef,
-      Language: 'UA',
+      CityName,
+      Limit: '10',
+      Page: '1',
     },
   };
 
@@ -27,6 +20,7 @@ export const officesListFetch = async ({ CityName, CityRef }: searchValues) => {
   const result = await response.json();
 
   if (result.success) {
+    console.log('searchSettlementsFetch.result.data', result.data);
     return result.data;
   }
 };
