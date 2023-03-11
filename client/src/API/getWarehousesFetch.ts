@@ -5,8 +5,11 @@ interface searchValues {
   CityRef?: string;
 }
 
-export const officesListFetch = async ({ CityName, CityRef }: searchValues) => {
-  console.log('in officesListFetch');
+export const getWarehousesFetch = async ({
+  CityName,
+  CityRef,
+}: searchValues) => {
+  console.log({ CityName, CityRef });
 
   const requestBody = {
     apiKey: API_KEY,
@@ -26,7 +29,7 @@ export const officesListFetch = async ({ CityName, CityRef }: searchValues) => {
   });
   const result = await response.json();
 
-  if (result.success) {
+  if (result.data.length !== 0) {
     return result.data;
   }
 };
