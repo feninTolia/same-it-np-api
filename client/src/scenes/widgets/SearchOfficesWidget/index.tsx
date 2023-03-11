@@ -21,8 +21,13 @@ const SearchOfficesWidget = (props: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 
-  const getOfficesList = async () => {
-    const result = await officesListFetch(cityName);
+  const getOfficesList = async (CityRef: string = '') => {
+    console.log(' in getOfficesList');
+
+    const result = await officesListFetch({
+      CityRef: CityRef,
+      CityName: cityName,
+    });
 
     setOfficesList(result);
   };

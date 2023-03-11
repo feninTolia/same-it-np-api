@@ -1,12 +1,20 @@
 const API_KEY = '47bebc438b872c9c970902470e6eaba0';
 
-export const officesListFetch = async (CityName: string) => {
+interface searchValues {
+  CityName?: string;
+  CityRef?: string;
+}
+
+export const officesListFetch = async ({ CityName, CityRef }: searchValues) => {
+  console.log('in officesListFetch');
+
   const requestBody = {
     apiKey: API_KEY,
     modelName: 'Address',
     calledMethod: 'getWarehouses',
     methodProperties: {
-      CityName,
+      CityName: CityRef ? '' : CityName,
+      CityRef,
       Language: 'UA',
     },
   };
