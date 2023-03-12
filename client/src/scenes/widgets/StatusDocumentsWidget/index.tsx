@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
-import { TTNInfoFetch } from '@/API/TTNInfoFetch';
+import { getStatusDocumentsFetch } from '@/API/getStatusDocumentsFetch';
 import WidgetWrapper from '@/components/WidgetWrapper';
 import { useAppDispatch } from '@/hook';
 import { addSearchedDocument } from '@/store/NPSlice';
@@ -13,7 +13,7 @@ const initialValuesTTNInfo = {
   recipientDateTime: '',
 };
 
-const TTNStatusWidget = () => {
+const StatusDocumentsWidget = () => {
   const [TTNValue, setTTNValue] = useState<string>('');
   const [TTNInfo, setTTNInfo] = useState(initialValuesTTNInfo);
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
@@ -23,7 +23,7 @@ const TTNStatusWidget = () => {
   const getTTNInfo = async (searchValue: string = '') => {
     setTTNInfo(initialValuesTTNInfo);
 
-    const result = await TTNInfoFetch(
+    const result = await getStatusDocumentsFetch(
       searchValue !== '' ? searchValue : TTNValue
     );
 
@@ -87,4 +87,4 @@ const TTNStatusWidget = () => {
   );
 };
 
-export default TTNStatusWidget;
+export default StatusDocumentsWidget;
