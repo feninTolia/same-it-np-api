@@ -18,7 +18,6 @@ export const searchSettlementsFetch = async (CityName: string) => {
   const result = await response.json();
 
   if (result.success) {
-    console.log('searchSettlementsFetch.result.data', result.data);
     return result.data;
   }
 };

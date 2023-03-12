@@ -7,6 +7,10 @@ import Form from './Form';
 import WarehousesList from './WarehousesList';
 import { useAppSelector } from '@/hook';
 
+import { ToastContainer } from 'react-toastify';
+import { notify } from '@/helpers/toastEmmiter';
+import 'react-toastify/dist/ReactToastify.css';
+
 const GetWarehousesWidget: React.FC = () => {
   const [warehouses, setWarehouses] = useState<warehouse[]>([]);
   const { CityRef, CityName } = useAppSelector(
@@ -19,7 +23,11 @@ const GetWarehousesWidget: React.FC = () => {
       CityName,
       WarehouseId,
     });
-    if (!result) return;
+
+    if (!result) {
+      notify('Некоректний запит');
+      return;
+    }
 
     setWarehouses(result);
   };
@@ -47,6 +55,7 @@ const GetWarehousesWidget: React.FC = () => {
           <WarehousesList warehouses={warehouses} />
         ) : null}
       </WidgetWrapper>
+      <ToastContainer />
     </Box>
   );
 };
