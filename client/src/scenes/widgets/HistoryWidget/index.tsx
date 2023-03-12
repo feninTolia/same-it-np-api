@@ -5,47 +5,25 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { SetStateAction, useEffect } from 'react';
-import FlexBetween from '../../../components/FlexBeetwen';
-import WidgetWrapper from '../../../components/WidgetWrapper';
+import FlexBetween from '@/components/FlexBeetwen';
+import WidgetWrapper from '@/components/WidgetWrapper';
 import { CloseOutlined } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from '../../../hook';
-import { addSearchedDocument } from '../../../store/NPSlice';
+import { useAppDispatch, useAppSelector } from '@/hook';
+import { deleteSearchedDocuments } from '@/store/NPSlice';
 
 interface Props {
   setTTNValue: (value: string) => void;
   getTTNInfo: (value: string) => void;
-  searchQueries: string[];
-  setSearchQueries: (value: SetStateAction<string[]>) => void;
 }
 
-const HistoryWidget = ({
-  setTTNValue,
-  getTTNInfo,
-  searchQueries,
-  setSearchQueries,
-}: Props) => {
+const HistoryWidget = ({ setTTNValue, getTTNInfo }: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
-  // const {} = useAppSelector((state) => state.NP.searchedDocuments);
+
+  const searchedDocuments = useAppSelector((state) => state.searchedDocuments);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const searchQueriesLS = localStorage.getItem('searchQueries');
-    if (searchQueriesLS) {
-      const parsedSearchQueriesLS = JSON.parse(searchQueriesLS);
-      setSearchQueries(parsedSearchQueriesLS);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (searchQueries.length !== 0) {
-      // dispatch(addSearchedDocument({ searchedDocument: searchQueries }));
-      localStorage.setItem('searchQueries', JSON.stringify(searchQueries));
-    }
-  }, [searchQueries]);
-
-  return searchQueries.length !== 0 ? (
+  return searchedDocuments.length !== 0 ? (
     <WidgetWrapper
       width={isNonMobileScreens ? '30%' : '100%'}
       display="flex"
@@ -59,8 +37,7 @@ const HistoryWidget = ({
         <Button
           color="error"
           onClick={() => {
-            localStorage.clear();
-            setSearchQueries([]);
+            dispatch(deleteSearchedDocuments());
           }}
         >
           <CloseOutlined />
@@ -68,12 +45,12 @@ const HistoryWidget = ({
       </FlexBetween>
 
       <Box sx={{ overflowY: 'scroll', maxHeight: 200 }}>
-        {searchQueries.map((searchQuery, idx) => (
+        {searchedDocuments.map((searchedDocument, idx) => (
           <Button
-            key={`${idx}-${searchQuery}`}
+            key={`${idx}-${searchedDocument}`}
             onClick={() => {
-              setTTNValue(searchQuery);
-              getTTNInfo(searchQuery);
+              setTTNValue(searchedDocument);
+              getTTNInfo(searchedDocument);
             }}
           >
             <Typography
@@ -85,7 +62,7 @@ const HistoryWidget = ({
                 },
               }}
             >
-              {searchQuery}
+              {searchedDocument}
             </Typography>
           </Button>
         ))}

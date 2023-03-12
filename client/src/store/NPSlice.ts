@@ -32,9 +32,13 @@ const NPSlice = createSlice({
     ) {
       state.searchedDocuments.push(action.payload.searchedDocument);
     },
+    deleteSearchedDocuments(state) {
+      state.searchedDocuments = [];
+    },
   },
 });
 
-export const { addSelectCity, addSearchedDocument } = NPSlice.actions;
+export const { addSelectCity, addSearchedDocument, deleteSearchedDocuments } =
+  NPSlice.actions;
 
 export default NPSlice.reducer;

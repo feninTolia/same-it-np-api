@@ -1,19 +1,11 @@
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
-import { TTNInfoFetch } from '../../../API/TTNInfoFetch';
-import FlexBetween from '../../../components/FlexBeetwen';
-import WidgetWrapper from '../../../components/WidgetWrapper';
+import { TTNInfoFetch } from '@/API/TTNInfoFetch';
+import WidgetWrapper from '@/components/WidgetWrapper';
+import { useAppDispatch } from '@/hook';
+import { addSearchedDocument } from '@/store/NPSlice';
 import HistoryWidget from '../HistoryWidget';
 import Form from './Form';
-
-type Props = {};
 
 const initialValuesTTNInfo = {
   status: '',
@@ -21,18 +13,18 @@ const initialValuesTTNInfo = {
   recipientDateTime: '',
 };
 
-const TTNStatusWidget = (props: Props) => {
+const TTNStatusWidget = () => {
   const [TTNValue, setTTNValue] = useState<string>('');
   const [TTNInfo, setTTNInfo] = useState(initialValuesTTNInfo);
-  const [searchQueries, setSearchQueries] = useState<string[]>([]);
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
-  const { palette } = useTheme();
 
-  const getTTNInfo = async (historySearchValue: string = '') => {
+  const dispatch = useAppDispatch();
+
+  const getTTNInfo = async (searchValue: string = '') => {
     setTTNInfo(initialValuesTTNInfo);
 
     const result = await TTNInfoFetch(
-      historySearchValue !== '' ? historySearchValue : TTNValue
+      searchValue !== '' ? searchValue : TTNValue
     );
 
     if (result) {
@@ -45,8 +37,8 @@ const TTNStatusWidget = (props: Props) => {
         recipientDateTime: RecipientDateTime,
       });
 
-      historySearchValue === '' &&
-        setSearchQueries((prev) => [...prev, Number]);
+      searchValue === '' &&
+        dispatch(addSearchedDocument({ searchedDocument: Number }));
     }
   };
 
@@ -89,12 +81,7 @@ const TTNStatusWidget = (props: Props) => {
         </WidgetWrapper>
 
         {/* History Widget */}
-        <HistoryWidget
-          setTTNValue={setTTNValue}
-          getTTNInfo={getTTNInfo}
-          searchQueries={searchQueries}
-          setSearchQueries={setSearchQueries}
-        />
+        <HistoryWidget setTTNValue={setTTNValue} getTTNInfo={getTTNInfo} />
       </Box>
     </Box>
   );

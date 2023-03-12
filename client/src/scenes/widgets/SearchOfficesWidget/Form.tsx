@@ -7,12 +7,10 @@ import {
   ButtonGroup,
 } from '@mui/material';
 import debounce from 'lodash.debounce';
-
 import { useMemo, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { searchSettlementsFetch } from '../../../API/searchSettlementsFetch';
-import { useAppSelector } from '../../../hook';
+import { useAppDispatch, useAppSelector } from '../../../hook';
 import { addSelectCity } from '../../../store/NPSlice';
 import { formValidation } from './formValidation';
 
@@ -34,15 +32,15 @@ const Form = ({ getOfficesList }: Props) => {
     useState(false);
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { wareHousesSelect } = useAppSelector((state) => state.getWarehouses);
+  const { CityName } = useAppSelector((state) => state.wareHousesSelect);
 
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IFormValue>({ values: { cityName: wareHousesSelect.CityName } });
+  } = useForm<IFormValue>({ values: { cityName: CityName } });
 
   const onSubmit: SubmitHandler<IFormValue> = (data) => {
     // getOfficesList();

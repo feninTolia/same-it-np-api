@@ -6,7 +6,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import FlexBetween from '../../../components/FlexBeetwen';
+import FlexBetween from '@/components/FlexBeetwen';
 import { formValidation } from './formValidation';
 
 interface Props {
