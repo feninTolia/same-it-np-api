@@ -8,6 +8,10 @@ import Form from './Form';
 import StatusInfoWidget from '../StatusInfoWidget';
 import { IInitialValuesStatusDocument } from '@/shared/types';
 
+import { ToastContainer } from 'react-toastify';
+import { notify } from '@/helpers/toastEmmiter';
+import 'react-toastify/dist/ReactToastify.css';
+
 const initialValuesStatusDocument: IInitialValuesStatusDocument = {
   status: '',
   dateCreated: '',
@@ -30,6 +34,8 @@ const StatusDocumentsWidget = () => {
     );
 
     if (result) {
+      if (result.data.at(0).StatusCode === '3') notify();
+
       const { Status, DateCreated, RecipientDateTime, Number } =
         result.data.at(0);
 
@@ -41,7 +47,7 @@ const StatusDocumentsWidget = () => {
 
       searchValue === '' &&
         dispatch(addSearchedDocument({ searchedDocument: Number }));
-    }
+    } else notify('Документ не знайдений');
   };
 
   return (
@@ -51,7 +57,6 @@ const StatusDocumentsWidget = () => {
         setDocumentNumber={setDocumentNumber}
         getStatusDocuments={getStatusDocuments}
       />
-
       <Box
         display={isNonMobileScreens ? 'flex' : undefined}
         gap="6%"
@@ -64,6 +69,7 @@ const StatusDocumentsWidget = () => {
           getStatusDocuments={getStatusDocuments}
         />
       </Box>
+      <ToastContainer />
     </Box>
   );
 };

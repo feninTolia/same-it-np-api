@@ -11,8 +11,6 @@ export const getWarehousesFetch = async ({
   CityRef,
   WarehouseId = '',
 }: searchValues) => {
-  console.log({ CityName, CityRef });
-
   const requestBody = {
     apiKey: import.meta.env.NP_API_KEY,
     modelName: 'Address',

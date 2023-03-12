@@ -59,7 +59,6 @@ const Form = ({ getWarehouses }: Props) => {
   );
 
   const onSubmit: SubmitHandler<IFormValue> = async (data) => {
-    console.log(data.warehouseNumber);
     getWarehouses(data.warehouseNumber);
     setSettlementsIsShown(false);
   };
@@ -144,7 +143,7 @@ const Form = ({ getWarehouses }: Props) => {
       <Controller
         control={control}
         name="warehouseNumber"
-        //TODO rules={warehouseNumberValidation}
+        rules={warehouseNumberValidation}
         render={({ field }) => (
           <TextField
             variant="outlined"
