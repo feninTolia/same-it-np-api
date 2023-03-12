@@ -7,14 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { office } from '@/shared/types';
+import { warehouse } from '@/shared/types';
 
 interface Column {
-  id:
-    | 'Number'
-    | 'ShortAddress'
-    // 'Schedule' |
-    | 'TotalMaxWeightAllowed';
+  id: 'Number' | 'ShortAddress' | 'TotalMaxWeightAllowed';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -24,13 +20,6 @@ interface Column {
 const columns: readonly Column[] = [
   { id: 'Number', label: 'Відділення / Поштомат', minWidth: 170 },
   { id: 'ShortAddress', label: 'Адреса', minWidth: 100 },
-  // {
-  //   id: 'Schedule',
-  //   label: 'Графік роботи',
-  //   minWidth: 170,
-  //   align: 'right',
-  //   format: (value: number) => value.toLocaleString('en-US'),
-  // },
   {
     id: 'TotalMaxWeightAllowed',
     label: 'Вага до',
@@ -41,12 +30,14 @@ const columns: readonly Column[] = [
 ];
 
 interface props {
-  officesList: office[];
+  warehouses: warehouse[];
 }
 
-export default function PostOfficesList({ officesList }: props) {
+export default function WarehousesList({ warehouses }: props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  React.useEffect(() => setPage(0), [warehouses]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -55,8 +46,8 @@ export default function PostOfficesList({ officesList }: props) {
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(+event.target.value);
     setPage(0);
+    setRowsPerPage(+event.target.value);
   };
 
   return (
@@ -77,18 +68,18 @@ export default function PostOfficesList({ officesList }: props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {officesList
+            {warehouses
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((office) => {
+              .map((warehouse) => {
                 return (
                   <TableRow
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={office.Ref}
+                    key={warehouse.Ref}
                   >
                     {columns.map((column) => {
-                      const value = office[column.id];
+                      const value = warehouse[column.id];
 
                       return (
                         <TableCell key={column.id} align={column.align}>
@@ -104,10 +95,11 @@ export default function PostOfficesList({ officesList }: props) {
           </TableBody>
         </Table>
       </TableContainer>
+
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={officesList.length}
+        count={warehouses.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

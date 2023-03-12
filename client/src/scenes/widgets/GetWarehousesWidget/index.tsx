@@ -2,32 +2,31 @@ import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getWarehousesFetch } from '@/API/getWarehousesFetch';
 import WidgetWrapper from '@/components/WidgetWrapper';
-import { office } from '@/shared/types';
+import { warehouse } from '@/shared/types';
 import Form from './Form';
-import PostOfficesList from './PostOfficesList';
+import WarehousesList from './WarehousesList';
 import { useAppSelector } from '@/hook';
 
-const SearchOfficesWidget: React.FC = () => {
-  const [officesList, setOfficesList] = useState<office[]>([]);
+const GetWarehousesWidget: React.FC = () => {
+  const [warehouses, setWarehouses] = useState<warehouse[]>([]);
   const { CityRef, CityName } = useAppSelector(
     (state) => state.wareHousesSelect
   );
 
-  const getOfficesList = async () => {
-    console.log('wareHousesSelect.CityName', CityName);
-
+  const getWarehouses = async (WarehouseId?: string) => {
     const result = await getWarehousesFetch({
       CityRef,
       CityName,
+      WarehouseId,
     });
     if (!result) return;
 
-    setOfficesList(result);
+    setWarehouses(result);
   };
 
   useEffect(() => {
     if (CityRef === '') return;
-    getOfficesList();
+    getWarehouses();
   }, [CityRef]);
 
   return (
@@ -42,14 +41,14 @@ const SearchOfficesWidget: React.FC = () => {
           Пошук відділення за номером або за населеним пунктом
         </Typography>
 
-        <Form getOfficesList={getOfficesList} />
+        <Form getWarehouses={getWarehouses} />
 
-        {officesList.length !== 0 ? (
-          <PostOfficesList officesList={officesList} />
+        {warehouses.length !== 0 ? (
+          <WarehousesList warehouses={warehouses} />
         ) : null}
       </WidgetWrapper>
     </Box>
   );
 };
 
-export default SearchOfficesWidget;
+export default GetWarehousesWidget;

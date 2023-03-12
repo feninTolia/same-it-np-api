@@ -3,11 +3,13 @@ const API_KEY = '47bebc438b872c9c970902470e6eaba0';
 interface searchValues {
   CityName?: string;
   CityRef?: string;
+  WarehouseId?: string;
 }
 
 export const getWarehousesFetch = async ({
   CityName,
   CityRef,
+  WarehouseId = '',
 }: searchValues) => {
   console.log({ CityName, CityRef });
 
@@ -19,6 +21,7 @@ export const getWarehousesFetch = async ({
       CityName: CityRef ? '' : CityName,
       CityRef,
       Language: 'UA',
+      WarehouseId: WarehouseId,
     },
   };
 

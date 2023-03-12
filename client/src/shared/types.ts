@@ -1,4 +1,4 @@
-export interface office {
+export interface warehouse {
   Number: string;
   ShortAddress: string;
   TotalMaxWeightAllowed: string;
