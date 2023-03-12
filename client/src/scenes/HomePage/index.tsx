@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useState } from 'react';
-import NavBar from '../../scenes/NavBar';
+import NavBar from '@/scenes/NavBar';
 import SearchOfficesWidget from '../widgets/SearchOfficesWidget';
 import TTNStatusWidget from '../widgets/TTNStatusWidget';
 
