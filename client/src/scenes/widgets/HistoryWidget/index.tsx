@@ -12,11 +12,11 @@ import { useAppDispatch, useAppSelector } from '@/hook';
 import { deleteSearchedDocuments } from '@/store/NPSlice';
 
 interface Props {
-  setTTNValue: (value: string) => void;
-  getTTNInfo: (value: string) => void;
+  setDocumentNumber: (value: string) => void;
+  getStatusDocuments: (value: string) => void;
 }
 
-const HistoryWidget = ({ setTTNValue, getTTNInfo }: Props) => {
+const HistoryWidget = ({ setDocumentNumber, getStatusDocuments }: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 
@@ -49,8 +49,8 @@ const HistoryWidget = ({ setTTNValue, getTTNInfo }: Props) => {
           <Button
             key={`${idx}-${searchedDocument}`}
             onClick={() => {
-              setTTNValue(searchedDocument);
-              getTTNInfo(searchedDocument);
+              setDocumentNumber(searchedDocument);
+              getStatusDocuments(searchedDocument);
             }}
           >
             <Typography

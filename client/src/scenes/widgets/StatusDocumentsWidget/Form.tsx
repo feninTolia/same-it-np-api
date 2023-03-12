@@ -10,26 +10,30 @@ import FlexBetween from '@/components/FlexBeetwen';
 import { formValidation } from './formValidation';
 
 interface Props {
-  TTNValue: string;
-  setTTNValue: (value: string) => void;
-  getTTNInfo: (historySearchValue?: string) => void;
+  documentNumber: string;
+  setDocumentNumber: (value: string) => void;
+  getStatusDocuments: (historySearchValue?: string) => void;
 }
 
 interface IFormValue {
   inputValue: string;
 }
 
-const Form = ({ TTNValue, setTTNValue, getTTNInfo }: Props) => {
+const Form = ({
+  documentNumber,
+  setDocumentNumber,
+  getStatusDocuments,
+}: Props) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IFormValue>({ values: { inputValue: TTNValue } });
+  } = useForm<IFormValue>({ values: { inputValue: documentNumber } });
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
 
   const onSubmit: SubmitHandler<IFormValue> = (data) => {
-    getTTNInfo();
+    getStatusDocuments();
   };
 
   return (
@@ -51,7 +55,7 @@ const Form = ({ TTNValue, setTTNValue, getTTNInfo }: Props) => {
               }}
               onChange={(e) => {
                 field.onChange(e);
-                setTTNValue(e.target.value);
+                setDocumentNumber(e.target.value);
               }}
               value={field.value}
               error={!!errors.inputValue?.message}

@@ -6,32 +6,35 @@ import { useAppDispatch } from '@/hook';
 import { addSearchedDocument } from '@/store/NPSlice';
 import HistoryWidget from '../HistoryWidget';
 import Form from './Form';
+import StatusWidget from './StatusWidget';
+import { IInitialValuesStatusDocument } from '@/shared/types';
 
-const initialValuesTTNInfo = {
+const initialValuesStatusDocument: IInitialValuesStatusDocument = {
   status: '',
   dateCreated: '',
   recipientDateTime: '',
 };
 
 const StatusDocumentsWidget = () => {
-  const [TTNValue, setTTNValue] = useState<string>('');
-  const [TTNInfo, setTTNInfo] = useState(initialValuesTTNInfo);
+  const [documentNumber, setDocumentNumber] = useState<string>('');
+  const [statusDocument, setStatusDocument] = useState(
+    initialValuesStatusDocument
+  );
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
-
   const dispatch = useAppDispatch();
 
-  const getTTNInfo = async (searchValue: string = '') => {
-    setTTNInfo(initialValuesTTNInfo);
+  const getStatusDocuments = async (searchValue: string = '') => {
+    setStatusDocument(initialValuesStatusDocument);
 
     const result = await getStatusDocumentsFetch(
-      searchValue !== '' ? searchValue : TTNValue
+      searchValue !== '' ? searchValue : documentNumber
     );
 
     if (result) {
       const { Status, DateCreated, RecipientDateTime, Number } =
         result.data.at(0);
 
-      setTTNInfo({
+      setStatusDocument({
         status: Status,
         dateCreated: DateCreated,
         recipientDateTime: RecipientDateTime,
@@ -47,41 +50,23 @@ const StatusDocumentsWidget = () => {
       {/* TTN Search */}
       <WidgetWrapper marginBottom={'2rem'}>
         <Form
-          TTNValue={TTNValue}
-          setTTNValue={setTTNValue}
-          getTTNInfo={getTTNInfo}
+          documentNumber={documentNumber}
+          setDocumentNumber={setDocumentNumber}
+          getStatusDocuments={getStatusDocuments}
         />
       </WidgetWrapper>
 
-      {/* info widget */}
       <Box
         display={isNonMobileScreens ? 'flex' : undefined}
         gap="6%"
         alignItems={'flex-start'}
       >
-        <WidgetWrapper
-          marginBottom={'2rem'}
-          width={isNonMobileScreens ? '64%' : '100%'}
-          display="flex"
-          flexDirection={'column'}
-          gap="0.5rem"
-        >
-          <Typography variant="h4" mb={'1rem'}>
-            <span style={{ fontWeight: 'bold' }}>Статус доставки: </span>
-            {TTNInfo.status}
-          </Typography>
-          <Typography variant="h5" mb={'0.5rem'}>
-            <span style={{ fontWeight: 'bold' }}>Відправлено: </span>
-            {TTNInfo.dateCreated}
-          </Typography>
-          <Typography variant="h5" mb={'1rem'}>
-            <span style={{ fontWeight: 'bold' }}>Отримано: </span>
-            {TTNInfo.recipientDateTime}
-          </Typography>
-        </WidgetWrapper>
+        <StatusWidget statusDocument={statusDocument} />
 
-        {/* History Widget */}
-        <HistoryWidget setTTNValue={setTTNValue} getTTNInfo={getTTNInfo} />
+        <HistoryWidget
+          setDocumentNumber={setDocumentNumber}
+          getStatusDocuments={getStatusDocuments}
+        />
       </Box>
     </Box>
   );
