@@ -6,7 +6,7 @@ type Props = {
   statusDocument: IInitialValuesStatusDocument;
 };
 
-const StatusWidget = ({ statusDocument }: Props) => {
+const StatusInfoWidget = ({ statusDocument }: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   return (
     <WidgetWrapper
@@ -32,4 +32,4 @@ const StatusWidget = ({ statusDocument }: Props) => {
   );
 };
 
-export default StatusWidget;
+export default StatusInfoWidget;

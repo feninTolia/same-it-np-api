@@ -13,15 +13,15 @@ import { deleteSearchedDocuments } from '@/store/NPSlice';
 
 interface Props {
   setDocumentNumber: (value: string) => void;
-  getStatusDocuments: (value: string) => void;
+  getStatusDocuments: (value?: string) => void;
 }
 
 const HistoryWidget = ({ setDocumentNumber, getStatusDocuments }: Props) => {
-  const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
-  const { palette } = useTheme();
-
   const searchedDocuments = useAppSelector((state) => state.searchedDocuments);
   const dispatch = useAppDispatch();
+
+  const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
+  const { palette } = useTheme();
 
   return searchedDocuments.length !== 0 ? (
     <WidgetWrapper

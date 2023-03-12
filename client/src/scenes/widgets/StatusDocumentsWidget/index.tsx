@@ -1,12 +1,11 @@
-import { Box, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
-import { getStatusDocumentsFetch } from '@/API/getStatusDocumentsFetch';
-import WidgetWrapper from '@/components/WidgetWrapper';
 import { useAppDispatch } from '@/hook';
 import { addSearchedDocument } from '@/store/NPSlice';
+import { getStatusDocumentsFetch } from '@/API/getStatusDocumentsFetch';
+import { Box, useMediaQuery } from '@mui/material';
 import HistoryWidget from '../HistoryWidget';
 import Form from './Form';
-import StatusWidget from './StatusWidget';
+import StatusInfoWidget from '../StatusInfoWidget';
 import { IInitialValuesStatusDocument } from '@/shared/types';
 
 const initialValuesStatusDocument: IInitialValuesStatusDocument = {
@@ -47,21 +46,18 @@ const StatusDocumentsWidget = () => {
 
   return (
     <Box width={'80%'} margin="auto">
-      {/* TTN Search */}
-      <WidgetWrapper marginBottom={'2rem'}>
-        <Form
-          documentNumber={documentNumber}
-          setDocumentNumber={setDocumentNumber}
-          getStatusDocuments={getStatusDocuments}
-        />
-      </WidgetWrapper>
+      <Form
+        documentNumber={documentNumber}
+        setDocumentNumber={setDocumentNumber}
+        getStatusDocuments={getStatusDocuments}
+      />
 
       <Box
         display={isNonMobileScreens ? 'flex' : undefined}
         gap="6%"
         alignItems={'flex-start'}
       >
-        <StatusWidget statusDocument={statusDocument} />
+        <StatusInfoWidget statusDocument={statusDocument} />
 
         <HistoryWidget
           setDocumentNumber={setDocumentNumber}
