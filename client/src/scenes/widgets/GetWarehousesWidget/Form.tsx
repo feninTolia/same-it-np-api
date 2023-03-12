@@ -143,7 +143,7 @@ const Form = ({ getWarehouses }: Props) => {
       <Controller
         control={control}
         name="warehouseNumber"
-        rules={warehouseNumberValidation}
+        //TODO rules={warehouseNumberValidation}
         render={({ field }) => (
           <TextField
             variant="outlined"
