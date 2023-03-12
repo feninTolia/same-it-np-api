@@ -45,7 +45,7 @@ const StatusDocumentsWidget = () => {
   };
 
   return (
-    <Box width={'80%'} margin="auto">
+    <Box width={'80%'} margin="auto" maxWidth={'1400px'}>
       <Form
         documentNumber={documentNumber}
         setDocumentNumber={setDocumentNumber}

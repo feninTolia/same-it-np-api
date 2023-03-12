@@ -30,7 +30,7 @@ const GetWarehousesWidget: React.FC = () => {
   }, [CityRef]);
 
   return (
-    <Box width={'80%'} margin="auto">
+    <Box width={'80%'} margin="auto" maxWidth={'1400px'}>
       <WidgetWrapper
         display={'flex'}
         flexWrap="wrap"
