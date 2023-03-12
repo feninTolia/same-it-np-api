@@ -112,7 +112,7 @@ const Form = ({ getWarehouses }: Props) => {
           maxHeight: 100,
           width: isNonMobileScreens ? '35%' : '100%',
           overflowY: 'scroll',
-          bgcolor: 'white',
+          bgcolor: palette.background.paper,
           zIndex: 15,
           border: '1px solid rgba(0, 0, 0, 0.299)',
           borderTop: 'transparent',
@@ -144,7 +144,7 @@ const Form = ({ getWarehouses }: Props) => {
       <Controller
         control={control}
         name="warehouseNumber"
-        rules={warehouseNumberValidation}
+        //TODO rules={warehouseNumberValidation}
         render={({ field }) => (
           <TextField
             variant="outlined"
