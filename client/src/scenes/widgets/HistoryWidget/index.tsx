@@ -9,6 +9,8 @@ import { SetStateAction, useEffect } from 'react';
 import FlexBetween from '../../../components/FlexBeetwen';
 import WidgetWrapper from '../../../components/WidgetWrapper';
 import { CloseOutlined } from '@mui/icons-material';
+import { useAppDispatch, useAppSelector } from '../../../hook';
+import { addSearchedDocument } from '../../../store/NPSlice';
 
 interface Props {
   setTTNValue: (value: string) => void;
@@ -25,6 +27,8 @@ const HistoryWidget = ({
 }: Props) => {
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { palette } = useTheme();
+  // const {} = useAppSelector((state) => state.NP.searchedDocuments);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const searchQueriesLS = localStorage.getItem('searchQueries');
@@ -36,6 +40,7 @@ const HistoryWidget = ({
 
   useEffect(() => {
     if (searchQueries.length !== 0) {
+      // dispatch(addSearchedDocument({ searchedDocument: searchQueries }));
       localStorage.setItem('searchQueries', JSON.stringify(searchQueries));
     }
   }, [searchQueries]);

@@ -5,17 +5,17 @@ interface WareHouse {
   CityRef: string;
 }
 
-interface GetWarehousesState {
+interface IState {
   wareHousesSelect: WareHouse;
-  wareHousesInput: WareHouse;
+  searchedDocuments: string[];
 }
 
-const initialState: GetWarehousesState = {
+const initialState: IState = {
   wareHousesSelect: { CityName: '', CityRef: '' },
-  wareHousesInput: { CityName: '', CityRef: '' },
+  searchedDocuments: [],
 };
 
-const getWarehousesSlice = createSlice({
+const NPSlice = createSlice({
   name: 'getWarehouses',
   initialState,
   reducers: {
@@ -26,17 +26,15 @@ const getWarehousesSlice = createSlice({
       state.wareHousesSelect.CityRef = action.payload.CityRef;
       state.wareHousesSelect.CityName = action.payload.CityName;
     },
-
-    addInputCity(
+    addSearchedDocument(
       state,
-      action: PayloadAction<{ CityRef: string; CityName: string }>
+      action: PayloadAction<{ searchedDocument: string }>
     ) {
-      state.wareHousesInput.CityRef = action.payload.CityRef;
-      state.wareHousesInput.CityName = action.payload.CityName;
+      state.searchedDocuments.push(action.payload.searchedDocument);
     },
   },
 });
 
-export const { addSelectCity, addInputCity } = getWarehousesSlice.actions;
+export const { addSelectCity, addSearchedDocument } = NPSlice.actions;
 
-export default getWarehousesSlice.reducer;
+export default NPSlice.reducer;

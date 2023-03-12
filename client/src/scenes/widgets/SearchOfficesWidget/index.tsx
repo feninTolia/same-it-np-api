@@ -9,7 +9,7 @@ import { useAppSelector } from '../../../hook';
 
 const SearchOfficesWidget: React.FC = () => {
   const [officesList, setOfficesList] = useState<office[]>([]);
-  const { wareHousesSelect } = useAppSelector((state) => state.getWarehouses);
+  const { wareHousesSelect } = useAppSelector((state) => state.NP);
 
   const getOfficesList = async () => {
     console.log('wareHousesSelect.CityName', wareHousesSelect.CityName);

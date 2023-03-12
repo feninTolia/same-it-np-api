@@ -13,7 +13,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { searchSettlementsFetch } from '../../../API/searchSettlementsFetch';
 import { useAppSelector } from '../../../hook';
-import { addSelectCity } from '../../../store/getWarehousesSlice';
+import { addSelectCity } from '../../../store/NPSlice';
 import { formValidation } from './formValidation';
 
 type Props = {
@@ -167,6 +167,7 @@ const Form = ({ getOfficesList }: Props) => {
           '&:hover': { color: palette.background.paper },
         }}
         type="submit"
+        disabled
       >
         Шукати
       </Button>
