@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { getWarehousesFetch } from '../../../API/getWarehousesFetch';
-import WidgetWrapper from '../../../components/WidgetWrapper';
-import { office } from '../../../shared/types';
+import { getWarehousesFetch } from '@/API/getWarehousesFetch';
+import WidgetWrapper from '@/components/WidgetWrapper';
+import { office } from '@/shared/types';
 import Form from './Form';
 import PostOfficesList from './PostOfficesList';
-import { useAppSelector } from '../../../hook';
+import { useAppSelector } from '@/hook';
 
 const SearchOfficesWidget: React.FC = () => {
   const [officesList, setOfficesList] = useState<office[]>([]);

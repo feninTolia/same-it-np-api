@@ -9,9 +9,9 @@ import {
 import debounce from 'lodash.debounce';
 import { useMemo, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { searchSettlementsFetch } from '../../../API/searchSettlementsFetch';
-import { useAppDispatch, useAppSelector } from '../../../hook';
-import { addSelectCity } from '../../../store/NPSlice';
+import { searchSettlementsFetch } from '@/API/searchSettlementsFetch';
+import { useAppDispatch, useAppSelector } from '@/hook';
+import { addSelectCity } from '@/store/NPSlice';
 import { formValidation } from './formValidation';
 
 type Props = {
