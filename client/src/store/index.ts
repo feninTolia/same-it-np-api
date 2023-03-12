@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import {
   persistReducer,
@@ -10,10 +10,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 import NPReducer from './NPSlice';
-
-// const reducers = combineReducers({
-//   NP: NPReducer,
-// });
 
 const persistConfig = { key: 'root', storage, version: 1 };
 
@@ -27,7 +23,7 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  // devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export default store;

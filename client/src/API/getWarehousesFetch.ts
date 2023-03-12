@@ -14,7 +14,7 @@ export const getWarehousesFetch = async ({
   console.log({ CityName, CityRef });
 
   const requestBody = {
-    apiKey: API_KEY,
+    apiKey: import.meta.env.NP_API_KEY,
     modelName: 'Address',
     calledMethod: 'getWarehouses',
     methodProperties: {
