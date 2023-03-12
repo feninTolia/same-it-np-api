@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useState } from 'react';
 import NavBar from '@/scenes/NavBar';
-import SearchOfficesWidget from '../widgets/SearchOfficesWidget';
+import GetWarehousesWidget from '../widgets/GetWarehousesWidget';
 import StatusDocumentsWidget from '../widgets/StatusDocumentsWidget';
 
 export enum SelectedPage {
@@ -21,7 +21,7 @@ const HomePage = () => {
       {pageType === SelectedPage.TTNStatus ? (
         <StatusDocumentsWidget />
       ) : (
-        <SearchOfficesWidget />
+        <GetWarehousesWidget />
       )}
     </Box>
   );
