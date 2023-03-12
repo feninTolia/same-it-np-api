@@ -8,11 +8,15 @@ interface WareHouse {
 interface IState {
   wareHousesSelect: WareHouse;
   searchedDocuments: string[];
+  mode: 'light' | 'dark';
+  isLoading: boolean;
 }
 
 const initialState: IState = {
   wareHousesSelect: { CityName: '', CityRef: '' },
   searchedDocuments: [],
+  mode: 'light',
+  isLoading: false,
 };
 
 const NPSlice = createSlice({
@@ -35,10 +39,21 @@ const NPSlice = createSlice({
     deleteSearchedDocuments(state) {
       state.searchedDocuments = [];
     },
+    setMode: (state) => {
+      state.mode = state.mode === 'light' ? 'dark' : 'light';
+    },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { addSelectCity, addSearchedDocument, deleteSearchedDocuments } =
-  NPSlice.actions;
+export const {
+  addSelectCity,
+  addSearchedDocument,
+  deleteSearchedDocuments,
+  setMode,
+  setIsLoading,
+} = NPSlice.actions;
 
 export default NPSlice.reducer;
