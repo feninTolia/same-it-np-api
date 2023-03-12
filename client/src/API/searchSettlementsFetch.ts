@@ -1,8 +1,6 @@
-const API_KEY = '47bebc438b872c9c970902470e6eaba0';
-
 export const searchSettlementsFetch = async (CityName: string) => {
   const requestBody = {
-    apiKey: API_KEY,
+    apiKey: import.meta.env.NP_API_KEY,
     modelName: 'Address',
     calledMethod: 'searchSettlements',
     methodProperties: {
