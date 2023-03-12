@@ -9,14 +9,16 @@ import { useAppSelector } from '../../../hook';
 
 const SearchOfficesWidget: React.FC = () => {
   const [officesList, setOfficesList] = useState<office[]>([]);
-  const { wareHousesSelect } = useAppSelector((state) => state.getWarehouses);
+  const { CityRef, CityName } = useAppSelector(
+    (state) => state.wareHousesSelect
+  );
 
   const getOfficesList = async () => {
-    console.log('wareHousesSelect.CityName', wareHousesSelect.CityName);
+    console.log('wareHousesSelect.CityName', CityName);
 
     const result = await getWarehousesFetch({
-      CityRef: wareHousesSelect.CityRef,
-      CityName: wareHousesSelect.CityName,
+      CityRef,
+      CityName,
     });
     if (!result) return;
 
@@ -24,9 +26,9 @@ const SearchOfficesWidget: React.FC = () => {
   };
 
   useEffect(() => {
-    if (wareHousesSelect.CityRef === '') return;
+    if (CityRef === '') return;
     getOfficesList();
-  }, [wareHousesSelect]);
+  }, [CityRef]);
 
   return (
     <Box width={'80%'} margin="auto">
