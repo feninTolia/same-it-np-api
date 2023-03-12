@@ -5,3 +5,9 @@ export interface office {
   Schedule: object;
   Ref: string;
 }
+
+export interface IInitialValuesStatusDocument {
+  status: string;
+  dateCreated: string;
+  recipientDateTime: string;
+}

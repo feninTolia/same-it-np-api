@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useState } from 'react';
 import NavBar from '@/scenes/NavBar';
 import SearchOfficesWidget from '../widgets/SearchOfficesWidget';
-import TTNStatusWidget from '../widgets/TTNStatusWidget';
+import StatusDocumentsWidget from '../widgets/StatusDocumentsWidget';
 
 export enum SelectedPage {
   TTNStatus = 'TTNStatus',
@@ -19,7 +19,7 @@ const HomePage = () => {
       <NavBar setPageType={setPageType} />
 
       {pageType === SelectedPage.TTNStatus ? (
-        <TTNStatusWidget />
+        <StatusDocumentsWidget />
       ) : (
         <SearchOfficesWidget />
       )}
