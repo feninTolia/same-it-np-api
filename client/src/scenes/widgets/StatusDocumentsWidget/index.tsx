@@ -34,7 +34,7 @@ const StatusDocumentsWidget = () => {
     );
 
     if (result) {
-      if (result.data.at(0).StatusCode === '3') notify();
+      if (result.data.at(0).StatusCode === '3') notify('Документ не знайдений');
 
       const { Status, DateCreated, RecipientDateTime, Number } =
         result.data.at(0);
